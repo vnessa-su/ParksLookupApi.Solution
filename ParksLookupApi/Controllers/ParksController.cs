@@ -31,6 +31,7 @@ namespace ParksLookupApi.Controllers
     [HttpPost]
     public async Task<ActionResult<Park>> Post(Park park)
     {
+      park.SetGeocodeData();
       _db.Parks.Add(park);
       await _db.SaveChangesAsync();
 
