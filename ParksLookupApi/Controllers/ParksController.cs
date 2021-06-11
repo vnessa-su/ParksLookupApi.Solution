@@ -50,7 +50,7 @@ namespace ParksLookupApi.Controllers
       return selectedPark;
     }
 
-    // PUT: parks/{id}
+    //PUT: parks/{id}
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, Park park)
     {
@@ -93,6 +93,80 @@ namespace ParksLookupApi.Controllers
       await _db.SaveChangesAsync();
 
       return Ok();
+    }
+
+    //PUT: parks/{id}/category/{categoryId}
+    [HttpPut("{id}/category/{categoryId}")]
+    public async Task<IActionResult> EditCategory(int id, int categoryId)
+    {
+      Park selectedPark = await _db.Parks.FindAsync(id);
+      if (selectedPark == null)
+      {
+        return NotFound();
+      }
+
+      selectedPark.CategoryId = categoryId;
+      _db.Entry(selectedPark).State = EntityState.Modified;
+      try
+      {
+        await _db.SaveChangesAsync();
+      }
+      catch (DbUpdateConcurrencyException)
+      {
+        if (!ParkExists(id))
+        {
+          return NotFound();
+        }
+        else
+        {
+          throw;
+        }
+      }
+
+      return Ok(selectedPark);
+    }
+
+    //DELETE: parks/{id}/category
+    [HttpDelete("{id}/category")]
+    public async Task<IActionResult> DeleteCategory(int id)
+    {
+      Park selectedPark = await _db.Parks.FindAsync(id);
+      if (selectedPark == null)
+      {
+        return NotFound();
+      }
+
+      selectedPark.CategoryId = 0;
+      _db.Entry(selectedPark).State = EntityState.Modified;
+      try
+      {
+        await _db.SaveChangesAsync();
+      }
+      catch (DbUpdateConcurrencyException)
+      {
+        if (!ParkExists(id))
+        {
+          return NotFound();
+        }
+        else
+        {
+          throw;
+        }
+      }
+
+      return Ok(selectedPark);
+    }
+
+    //GET: parks/random
+    [HttpGet("random")]
+    public async Task<ActionResult<Park>> GetRandom()
+    {
+      List<Park> allParks = await _db.Parks.ToListAsync();
+      int numberOfEntries = allParks.Count;
+      Random randomNumberGenerator = new Random();
+      int randomIndex = randomNumberGenerator.Next(0, numberOfEntries);
+      Park randomPark = allParks[randomIndex];
+      return randomPark;
     }
 
     private bool ParkExists(int id)
