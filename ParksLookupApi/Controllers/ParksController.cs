@@ -59,7 +59,7 @@ namespace ParksLookupApi.Controllers
       {
         return BadRequest();
       }
-
+      park.SetGeocodeData();
       _db.Entry(park).State = EntityState.Modified;
       try
       {
