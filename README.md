@@ -400,7 +400,7 @@ http://localhost:5000/categories
   {
     "categoryId": 1,
     "name": "National Park",
-    "description": "Parks mean to preserve, unimpaired, natural and cultural resources for enjoyment, education, and inspiration of this and future generations."
+    "description": "Parks meant to preserve, unimpaired, natural and cultural resources for enjoyment, education, and inspiration of this and future generations."
   },
   {
     "categoryId": 2,
