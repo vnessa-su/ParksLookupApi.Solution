@@ -11,8 +11,8 @@ namespace ParksLookupApi.Models
     public string Address { get; set; }
     public string City { get; set; }
     public string State { get; set; }
-    public decimal Latitude { get; private set; }
-    public decimal Longitude { get; private set; }
+    public decimal Latitude { get; set; }
+    public decimal Longitude { get; set; }
 
     public int CategoryId { get; set; }
 
