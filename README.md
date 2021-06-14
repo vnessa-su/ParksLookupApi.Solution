@@ -124,47 +124,70 @@ Information on various local, state, and national parks
 
 _Retrieve a list of all parks_
 
+- Request Parameters
+
+  - `limit`: integer number of park entries to return, default returns all parks
+  - `location`: input an address to get the park list ordered from nearest to furthest distance
+
 - Example Request
 
 ```
-http://localhost:5000/parks
+http://localhost:5000/parks?limit=3&location=Boston,MA
 ```
 
 - Example Response
 
 ```
-[
-  {
-    "parkId": 1,
-    "name": "Yosemite National Park",
-    "address": "9035 Village Drive",
-    "city": "Yosemite Valley",
-    "state": "CA",
-    "latitude": 37.748100000000000000000000000,
-    "longitude": -119.58504300000000000000000000,
-    "categoryId": 1
-  },
-  {
-    "parkId": 2,
-    "name": "Boston Harbor Islands",
-    "address": "191W Atlantic Ave",
+{
+  "inputLocation": {
+    "address": "",
     "city": "Boston",
     "state": "MA",
-    "latitude": 42.360100000000000000000000000,
-    "longitude": -71.052016000000000000000000000,
-    "categoryId": 3
+    "latitude": 42.358894,
+    "longitude": -71.056742
   },
-  {
-    "parkId": 3,
-    "name": "White Mountain National Forest",
-    "address": "71 White Mountain Drive",
-    "city": "Campton",
-    "state": "NH",
-    "latitude": 43.813494000000000000000000000,
-    "longitude": -71.670031000000000000000000000,
-    "categoryId": 2
-  }
-]
+  "parksList": [
+    {
+      "park": {
+        "parkId": 2,
+        "name": "Boston Harbor Islands",
+        "address": "191W Atlantic Ave",
+        "city": "Boston",
+        "state": "MA",
+        "latitude": 42.3601,
+        "longitude": -71.052016,
+        "categoryId": 3
+      },
+      "distanceFromInMiles": 0.255092344820853
+    },
+    {
+      "park": {
+        "parkId": 3,
+        "name": "White Mountain National Forest",
+        "address": "71 White Mountain Drive",
+        "city": "Campton",
+        "state": "NH",
+        "latitude": 43.813494,
+        "longitude": -71.670031,
+        "categoryId": 2
+      },
+      "distanceFromInMiles": 105.085764888161
+    },
+    {
+      "park": {
+        "parkId": 6,
+        "name": "Piedmont Park",
+        "address": "1320 Monroe Dr NE",
+        "city": "Atlanta",
+        "state": "GA",
+        "latitude": 33.788359813469214,
+        "longitude": -84.37293713315903,
+        "categoryId": 5
+      },
+      "distanceFromInMiles": 932.930239814699
+    }
+  ]
+}
 ```
 
 ### POST /parks
