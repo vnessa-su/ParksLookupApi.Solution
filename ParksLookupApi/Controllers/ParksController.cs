@@ -22,9 +22,27 @@ namespace ParksLookupApi.Controllers
 
     //GET: parks
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Park>>> Get()
+    public async Task<ActionResult<ParkListResponse>> Get(int limit, string location)
     {
-      return await _db.Parks.ToListAsync();
+      List<Park> allParks = await _db.Parks.ToListAsync();
+      int listLimit = allParks.Count;
+
+      if (limit != 0)
+      {
+        listLimit = limit;
+      }
+
+      if (location != null)
+      {
+        Location inputLocation = new Location(location);
+        ParkListResponse nearestParks = new ParkListResponse(inputLocation);
+        nearestParks.GenerateParksListWithDistance(allParks, listLimit);
+        return nearestParks;
+      }
+
+      ParkListResponse parksList = new ParkListResponse();
+      parksList.GenerateParksListOnly(allParks, listLimit);
+      return parksList;
     }
 
     //POST: parks
